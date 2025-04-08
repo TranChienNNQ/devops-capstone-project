@@ -63,12 +63,9 @@ def create_accounts():
 
 # ... place you code here to LIST accounts ...
 
-@app.route("/accounts", methods = ["GET"])
+
+@app.route("/accounts", methods=["GET"])
 def list_accounts():
-    """
-    List all Accounts
-    This endpoint will list all Accounts
-    """    
     app.logger.info("Request to list Accounts")
     accounts = Account.all()
     account_list = [account.serialize() for account in accounts]
@@ -99,26 +96,28 @@ def get_accounts(account_id):
 
 # ... place you code here to UPDATE an account ...
 
+
 @app.route("/accounts/<int:account_id>", methods=["PUT"])
 def update_account(account_id):
     """
     Update an Account
     This endpoint will update an Account based on the posted data
-    """ 
+    """
     app.logger.info("Request to update an Account with id: %s", account_id)
     account = Account.find(account_id)
     if not account:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] counld not be found.") 
+        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] counld not be found.")
     account.deserialize(request.get_json())
     account.update()
-
-    return account.serialize(), status.HTTP_200_OK  
+    return account.serialize(), status.HTTP_200_OK
 
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
 
 # ... place you code here to DELETE an account ...
+
+
 @app.route("/accounts/<int:account_id>", methods=["DELETE"])
 def delete_accounts(account_id):
     """
@@ -148,5 +147,3 @@ def check_content_type(media_type):
         status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
         f"Content-Type must be {media_type}",
     )
-
-
